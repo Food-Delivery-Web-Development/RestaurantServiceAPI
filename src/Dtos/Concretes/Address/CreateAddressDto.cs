@@ -8,6 +8,7 @@ public class CreateAddressDto : ICreateDto<Address>
     public required string Street { get; init; }
     public required string City { get; init; }
     public required string Country { get; init; }
+    public required Guid RestaurantId { get; init; }
 
     public Address ToEntity()
     {
@@ -16,6 +17,7 @@ public class CreateAddressDto : ICreateDto<Address>
             Street = Street,
             City = City,
             Country = Country,
+            RestaurantId = RestaurantId,
         };
     }
 }

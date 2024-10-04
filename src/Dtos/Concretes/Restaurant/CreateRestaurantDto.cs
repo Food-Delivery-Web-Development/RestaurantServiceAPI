@@ -7,7 +7,7 @@ public class CreateRestaurantDto : ICreateDto<Restaurant>
 {
     public required string Name { get; init; }
     public required string Branch { get; init; }
-    public required Guid AddressId { get; init; }
+    public required string LogoUrl { get; init; }
 
     public Restaurant ToEntity()
     {
@@ -15,7 +15,7 @@ public class CreateRestaurantDto : ICreateDto<Restaurant>
         {
             Name = Name,
             Branch = Branch,
-            AddressId = AddressId,
+            LogoUrl = LogoUrl,
         };
     }
 }

@@ -9,16 +9,17 @@ public class ProductMap : IEntityTypeConfiguration<Product>
     public void Configure(EntityTypeBuilder<Product> builder)
     {
         builder.ToTable("product");
-        builder.HasKey(x => x.Id);
+        builder.HasKey(p => p.Id);
 
-        builder.Property(x => x.Id).ValueGeneratedOnAdd().HasColumnName("id");
-        builder.Property(x => x.Name).IsRequired().HasColumnName("name").HasMaxLength(100);
+        builder.Property(p => p.Id).ValueGeneratedOnAdd().HasColumnName("id");
+        builder.Property(p => p.Name).IsRequired().HasColumnName("name").HasMaxLength(100);
         builder
-            .Property(x => x.Description)
+            .Property(p => p.Description)
             .IsRequired()
             .HasColumnName("description")
             .HasMaxLength(1000);
-        builder.Property(x => x.Price).IsRequired().HasColumnName("price");
-        builder.Property(x => x.RestaurantId).IsRequired().HasColumnName("restaurant_id");
+        builder.Property(p => p.Price).IsRequired().HasColumnName("price");
+        builder.Property(p => p.ImageUrl).IsRequired().HasColumnName("image_url").HasMaxLength(255);
+        builder.Property(p => p.RestaurantId).IsRequired().HasColumnName("restaurant_id");
     }
 }

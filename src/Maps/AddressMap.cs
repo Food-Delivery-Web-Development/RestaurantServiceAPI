@@ -9,17 +9,12 @@ public class AddressMap : IEntityTypeConfiguration<Address>
     public void Configure(EntityTypeBuilder<Address> builder)
     {
         builder.ToTable("address");
-        builder.HasKey(x => x.Id);
+        builder.HasKey(a => a.Id);
 
-        builder.Property(x => x.Id).ValueGeneratedOnAdd().HasColumnName("id");
-        builder.Property(x => x.Street).IsRequired().HasColumnName("street").HasMaxLength(100);
-        builder.Property(x => x.City).IsRequired().HasColumnName("city").HasMaxLength(100);
-        builder.Property(x => x.Country).IsRequired().HasColumnName("country").HasMaxLength(100);
-
-        builder
-            .HasOne<Restaurant>()
-            .WithOne(r => r.Address)
-            .HasForeignKey<Restaurant>(r => r.AddressId)
-            .IsRequired();
+        builder.Property(a => a.Id).ValueGeneratedOnAdd().HasColumnName("id");
+        builder.Property(a => a.Street).IsRequired().HasColumnName("street").HasMaxLength(100);
+        builder.Property(a => a.City).IsRequired().HasColumnName("city").HasMaxLength(100);
+        builder.Property(a => a.Country).IsRequired().HasColumnName("country").HasMaxLength(100);
+        builder.Property(a => a.RestaurantId).IsRequired().HasColumnName("restaurant_id");
     }
 }

@@ -9,13 +9,19 @@ public class RestaurantMap : IEntityTypeConfiguration<Restaurant>
     public void Configure(EntityTypeBuilder<Restaurant> builder)
     {
         builder.ToTable("restaurant");
-        builder.HasKey(x => x.Id);
+        builder.HasKey(r => r.Id);
 
-        builder.Property(x => x.Id).ValueGeneratedOnAdd().HasColumnName("id");
-        builder.Property(x => x.Name).IsRequired().HasColumnName("name").HasMaxLength(100);
-        builder.Property(x => x.Branch).IsRequired().HasColumnName("branch").HasMaxLength(100);
-        builder.Property(x => x.AddressId).IsRequired().HasColumnName("address_id");
+        builder.Property(r => r.Id).ValueGeneratedOnAdd().HasColumnName("id");
+        builder.Property(r => r.Name).IsRequired().HasColumnName("name").HasMaxLength(100);
+        builder.Property(r => r.Branch).IsRequired().HasColumnName("branch").HasMaxLength(100);
+        builder.Property(r => r.LogoUrl).IsRequired().HasColumnName("logo_url").HasMaxLength(255);
 
-        builder.HasMany<Product>().WithOne().HasForeignKey(p => p.RestaurantId).IsRequired();
+        builder
+            .HasOne(r => r.Address)
+            .WithOne()
+            .HasForeignKey<Address>(a => a.RestaurantId)
+            .IsRequired();
+
+        builder.HasMany(r => r.Products).WithOne().HasForeignKey(p => p.RestaurantId).IsRequired();
     }
 }

@@ -15,9 +15,16 @@ public abstract class BaseRepository<T>(PostgresContext context) : IRepository<T
         Context?.Dispose();
     }
 
+    protected abstract IQueryable<T> GetQueryable();
+
     public async Task<IEnumerable<T>> GetAll()
     {
-        return await Context.Set<T>().ToListAsync();
+        return await GetQueryable().ToListAsync();
+    }
+
+    public async Task<T?> GetById(Guid id)
+    {
+        return await GetQueryable().FirstOrDefaultAsync(r => r.Id == id);
     }
 
     public async Task<T?> Create(T entity)
@@ -33,11 +40,6 @@ public abstract class BaseRepository<T>(PostgresContext context) : IRepository<T
         await Context.SaveChangesAsync();
 
         return entity;
-    }
-
-    public async Task<T?> GetById(Guid id)
-    {
-        return await Context.Set<T>().FirstOrDefaultAsync(x => x.Id.Equals(id));
     }
 
     public async Task<T?> Update(T entity)

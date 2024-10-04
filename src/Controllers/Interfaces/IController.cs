@@ -11,6 +11,8 @@ public interface IController<TEntity, TCreateDto, TUpdateDto>
 {
     Task<IActionResult> Create(TCreateDto request);
 
+    Task<IActionResult> GetAll();
+
     Task<IActionResult> GetById(Guid id);
 
     Task<IActionResult> Update(Guid id, TUpdateDto request);

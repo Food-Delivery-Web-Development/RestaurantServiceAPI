@@ -84,4 +84,17 @@ public abstract class BaseController<TEntity, TCreateDto, TUpdateDto>(IService<T
 
         return Ok();
     }
+
+    [HttpGet]
+    public virtual async Task<IActionResult> GetAll()
+    {
+        IEnumerable<TEntity> result = await Service.GetAllAsync();
+
+        if (result is null || !result.Any())
+        {
+            return NotFound();
+        }
+
+        return Ok(result);
+    }
 }

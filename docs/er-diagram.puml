@@ -1,0 +1,52 @@
+@startuml Entity Diagram
+
+entity User {
+    +Id: UUID [PK]
+    --
+    FullName: VARCHAR(255)
+    Email: VARCHAR(255)
+    AddressId: UUID [FK]
+    CreatedAt: TIMESTAMP
+}
+
+entity Address {
+    +Id: UUID [PK]
+    --
+    Street: VARCHAR(255)
+    City: VARCHAR(255)
+    Country: VARCHAR(255)
+}
+
+entity Product {
+    +Id: UUID [PK]
+    --
+    Name: VARCHAR(100)
+    Description: TEXT
+    Price: DECIMAL(10,2)
+    Category: VARCHAR(100)
+}
+
+entity Order {
+    +Id: UUID [PK]
+    --
+    UserId: UUID [FK]
+    Status: VARCHAR(50)
+    OrderDate: TIMESTAMP
+    TotalAmount: DECIMAL(10,2)
+}
+
+entity OrderItem {
+    +Id: UUID [PK]
+    --
+    OrderId: UUID [FK]
+    ProductId: UUID [FK]
+    Quantity: INT
+    UnitPrice: DECIMAL(10,2)
+}
+
+User ||--o Address : "has"
+User ||--o "Order" : "places"
+Order ||--o OrderItem : "contains"
+Product ||--o OrderItem : "listed in"
+
+@enduml
